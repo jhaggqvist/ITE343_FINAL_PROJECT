@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "955004609616",
+    "firebase_url": "https://ite343-finalproject.firebaseio.com",
+    "project_id": "ite343-finalproject",
+    "storage_bucket": "ite343-finalproject.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:955004609616:android:6693ba3c50156377",
+        "android_client_info": {
+          "package_name": "com.example.malthael.weatherprediction"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "955004609616-gn27voaqnbilkglj2ik501r1cdlio3vp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.malthael.weatherprediction",
+            "certificate_hash": "5a184797f9886d9df2e62194e3f3916589532350"
+          }
+        },
+        {
+          "client_id": "955004609616-bgn6lob6ag4cej3ab7hrp84a7jluou3b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDL3MTphu7pUehypQEJiRocAv3UKFrDzMw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "955004609616-bgn6lob6ag4cej3ab7hrp84a7jluou3b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
