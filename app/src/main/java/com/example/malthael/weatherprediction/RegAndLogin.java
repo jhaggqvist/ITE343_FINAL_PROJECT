@@ -9,8 +9,13 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -62,7 +67,35 @@ public class RegAndLogin extends AppCompatActivity {
         };
         getEmail = (EditText)findViewById(R.id.editTextUsername);
         getPassword = (EditText)findViewById(R.id.editTextUsername);
-        
+
+    }// end of onCreate
+
+
+    public void createAccount(View view){                       // creates a new account
+        String email = getEmail.getText().toString();
+        String password = getPassword.getText().toString();
+
+        mAuth.createUserWithEmailAndPassword(email,password);
+        // check if account exists?
+    }
+
+    public void logIn(View view){                               // login with created account
+        final String email = getEmail.getText().toString();
+        String password = getPassword.getText().toString();
+        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+
+            public void onComplete(@NonNull Task<AuthResult> task) {                // if login is successfull
+           Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
+                Toast.makeText(RegAndLogin.this, "Welcome" + email, Toast.LENGTH_SHORT).show();
+
+
+
+                if(!task.isSuccessful()){                                           // if login is not successfull
+                    Toast.makeText(RegAndLogin.this, "failed to login", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
     }
     @Override
