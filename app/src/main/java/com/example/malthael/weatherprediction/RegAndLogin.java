@@ -9,8 +9,13 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -62,7 +67,52 @@ public class RegAndLogin extends AppCompatActivity {
         };
         getEmail = (EditText)findViewById(R.id.editTextUsername);
         getPassword = (EditText)findViewById(R.id.editTextUsername);
-        
+
+    }// end of onCreate
+
+
+    public void createAccount(View view){                       // creates a new account
+        String email = getEmail.getText().toString();
+        String password = getPassword.getText().toString();
+
+        if (email.equals("") || password.equals("")){
+            Toast.makeText(RegAndLogin.this, "Please enter Email and Password.", Toast.LENGTH_SHORT).show();
+        }
+else {
+            mAuth.createUserWithEmailAndPassword(email,password);
+        }
+
+
+
+
+    }
+
+    public void logIn(final View view){                               // login with created account
+        final String email = getEmail.getText().toString();
+        String password = getPassword.getText().toString();
+        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+
+            public void onComplete(@NonNull Task<AuthResult> task) {                // if login is successfull
+           Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
+
+
+                if (task.isSuccessful()){
+                    Toast.makeText(RegAndLogin.this, "Welcome" + email, Toast.LENGTH_SHORT).show();
+                  loginSuccess(view); // new intent for MainActivity
+                }
+
+                if(!task.isSuccessful()){                                           // if login is not successfull
+                    Toast.makeText(RegAndLogin.this, "Wrong email or password", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    //error
+                }
+            }
+        });
+
+
+
 
     }
     @Override
@@ -76,5 +126,9 @@ public class RegAndLogin extends AppCompatActivity {
         if (mAuthListener != null) {
             mAuth.removeAuthStateListener(mAuthListener);
         }
+    }
+    public void loginSuccess(View view){
+        Intent myIntent = new Intent(this, MainActivity.class);
+        startActivity(myIntent);
     }
 }
