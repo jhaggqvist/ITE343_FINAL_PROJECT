@@ -89,27 +89,36 @@ else {
 
     public void logIn(final View view){                               // login with created account
         final String email = getEmail.getText().toString();
-        String password = getPassword.getText().toString();
-        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-            @Override
+        final String password = getPassword.getText().toString();
 
-            public void onComplete(@NonNull Task<AuthResult> task) {                // if login is successfull
-           Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
+        if (email.equals("") || password.equals("")){                  // if password and email is not set
+            Toast.makeText(RegAndLogin.this, "please enter Email and Password", Toast.LENGTH_SHORT).show();
+        }
 
+        if (!email.equals("") || !password.equals("")){                 // if password and email is set, login
+            mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                @Override
 
-                if (task.isSuccessful()){
-                    Toast.makeText(RegAndLogin.this, "Welcome" + email, Toast.LENGTH_SHORT).show();
-                  loginSuccess(view); // new intent for MainActivity
+                public void onComplete(@NonNull Task<AuthResult> task) {                // if login is successfull
+                    Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
+                    if (task.isSuccessful()){
+                        Toast.makeText(RegAndLogin.this, "Welcome" + email, Toast.LENGTH_SHORT).show();
+                        loginSuccess(view); // new intent for MainActivity/start of app
+                    }
+
+                    if(!task.isSuccessful()){                                           // if login is not successfull
+                        Toast.makeText(RegAndLogin.this, "Wrong email or password", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        //error
+                    }
                 }
+            });
+        }
 
-                if(!task.isSuccessful()){                                           // if login is not successfull
-                    Toast.makeText(RegAndLogin.this, "Wrong email or password", Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    //error
-                }
-            }
-        });
+
+
+
 
 
 
