@@ -9,15 +9,39 @@
     tools:layout_editor_absoluteX="0dp"
     android:padding="10dp">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/cloud"
+        android:id="@+id/cloud"
+        android:layout_alignParentLeft="true"/>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/humidity"
+        android:layout_toRightOf="@id/cloud"
+        android:id="@+id/humidity"/>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/rainy"
+        android:layout_toLeftOf="@+id/wind"
+        android:id="@+id/rainy"/>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/wind"
+        android:layout_alignParentRight="true"
+        android:id="@+id/wind"/>
     <EditText
         android:id="@+id/editTextUsername"
         android:layout_width="211dp"
         android:layout_height="45dp"
         android:inputType="textEmailAddress"
         android:hint="Email"
+        android:layout_marginBottom="11dp"
         android:layout_above="@+id/editTextPassword"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="23dp" />
+        android:layout_centerHorizontal="true" />
 
     <EditText
 
@@ -26,10 +50,9 @@
         android:layout_height="43dp"
         android:inputType="textPassword"
         android:hint="Password"
-        android:layout_marginBottom="23dp"
         android:layout_above="@+id/buttonREG"
-        android:layout_alignStart="@+id/buttonREG"
-        />
+        android:layout_alignStart="@+id/editTextUsername"
+        android:layout_marginBottom="24dp" />
 
     <Button
 
@@ -40,7 +63,7 @@
         android:onClick="createAccount"
         android:layout_alignBaseline="@+id/buttonLOGIN"
         android:layout_alignBottom="@+id/buttonLOGIN"
-        android:layout_alignStart="@+id/editTextUsername" />
+        android:layout_alignStart="@+id/editTextPassword" />
 
     <Button
 
@@ -49,7 +72,26 @@
         android:layout_height="wrap_content"
         android:text="Login"
         android:onClick="logIn"
-        android:layout_centerVertical="true"
-        android:layout_alignEnd="@+id/editTextUsername" />
+        android:layout_above="@+id/orUse"
+        android:layout_alignEnd="@+id/editTextUsername"
+        android:layout_marginBottom="12dp" />
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Or use G+"
+    android:id="@+id/orUse"
+    android:textSize="20dp"
+    android:paddingTop="16dp"
+    android:layout_above="@+id/gPlus"
+    android:layout_centerHorizontal="true" />
+
+    <com.google.android.gms.common.SignInButton
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:paddingTop="12dp"
+        android:id="@+id/gPlus"
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@+id/humidity"
+        android:layout_marginBottom="59dp" />
 
 </RelativeLayout>
