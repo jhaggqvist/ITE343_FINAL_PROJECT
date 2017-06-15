@@ -1,35 +1,35 @@
 {
   "project_info": {
-    "project_number": "955004609616",
-    "firebase_url": "https://ite343-finalproject.firebaseio.com",
-    "project_id": "ite343-finalproject",
-    "storage_bucket": "ite343-finalproject.appspot.com"
+    "project_number": "327900104132",
+    "firebase_url": "https://weather-472ce.firebaseio.com",
+    "project_id": "weather-472ce",
+    "storage_bucket": "weather-472ce.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:955004609616:android:6693ba3c50156377",
+        "mobilesdk_app_id": "1:327900104132:android:6693ba3c50156377",
         "android_client_info": {
           "package_name": "com.example.malthael.weatherprediction"
         }
       },
       "oauth_client": [
         {
-          "client_id": "955004609616-gn27voaqnbilkglj2ik501r1cdlio3vp.apps.googleusercontent.com",
+          "client_id": "327900104132-ei6q3mb24l67g5q3r8mtrmfonvg5u7db.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.malthael.weatherprediction",
-            "certificate_hash": "5a184797f9886d9df2e62194e3f3916589532350"
+            "certificate_hash": "90444460db4bcafd5acd628df9b80eda361020e2"
           }
         },
         {
-          "client_id": "955004609616-bgn6lob6ag4cej3ab7hrp84a7jluou3b.apps.googleusercontent.com",
+          "client_id": "327900104132-tosd9m1k9qj7e3q3kkfr9cbl0okt4m6g.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDL3MTphu7pUehypQEJiRocAv3UKFrDzMw"
+          "current_key": "AIzaSyAXvKgDICiodU36uEGLVllDi3Ftx-szKsE"
         }
       ],
       "services": {
@@ -40,7 +40,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "955004609616-bgn6lob6ag4cej3ab7hrp84a7jluou3b.apps.googleusercontent.com",
+              "client_id": "327900104132-tosd9m1k9qj7e3q3kkfr9cbl0okt4m6g.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
