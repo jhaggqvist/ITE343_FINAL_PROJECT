@@ -156,14 +156,5 @@
         android:textColor="#2D2C31"
         android:gravity="center"/>
 
-    <Button
-        android:id="@+id/btn_next_days"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Next Days"
-        android:textColor="#2D2C31"/>
-
-
 
 </LinearLayout>
