@@ -93,6 +93,6 @@
         android:layout_alignParentBottom="true"
         android:layout_toEndOf="@+id/humidity"
         android:layout_marginBottom="59dp"
-        android:onClick="signInG"/>
+        />
 
 </RelativeLayout>

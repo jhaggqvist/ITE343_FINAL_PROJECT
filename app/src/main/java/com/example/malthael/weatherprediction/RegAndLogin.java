@@ -22,7 +22,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class RegAndLogin extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
+public class RegAndLogin extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private String TAG = "";
@@ -43,7 +43,9 @@ public class RegAndLogin extends AppCompatActivity implements GoogleApiClient.On
         setContentView(R.layout.activity_reg_and_login);
 //--------GOOGLE--------
         //findViewById(R.id.gPlus).setOnClickListener((View.OnClickListener) this);
+        findViewById(R.id.gPlus).setOnClickListener(this);
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
 
@@ -102,7 +104,8 @@ public class RegAndLogin extends AppCompatActivity implements GoogleApiClient.On
         }
     }
 */
-public void signInG(){
+private void signIn(){
+    Log.e("++++++++", "hey");
     Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
     startActivityForResult(signInIntent, RC_SIGN_IN);
 }
@@ -213,4 +216,13 @@ else {
 
     }
     //-----/FIREBASE
+
+
+    @Override
+    public void onClick(View v) {
+        int i = v.getId();
+        if  (i == R.id.gPlus){
+            signIn();
+        }
+    }
 }
