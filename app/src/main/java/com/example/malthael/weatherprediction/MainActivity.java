@@ -63,17 +63,17 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
                     .build();
         }
 
-        // Check for the external storage permission
+        // Check for the access location permission
         if (ContextCompat.checkSelfPermission(this,
                 android.Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
 
-            // If you do not have permission, request it
+            // If the app does not have permission, it requests user
             ActivityCompat.requestPermissions(this,
                     new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
                     MY_PERMISSIONS_REQUEST);
         } else {
-            // Launch the camera if the permission exists
+            // If the permission successfully granted, get current weather for device's last location
             launchLocation();
 
         }
@@ -114,6 +114,8 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
         mGoogleApiClient.disconnect();
         super.onStop();
     }
+
+    //Functions to initialize value for Lat and Lon variables
     public void launchLocation() {
         if (ContextCompat.checkSelfPermission(this,
                 android.Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -126,14 +128,19 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
             if (mLastLocation != null) {
                 mLatitude=String.valueOf(mLastLocation.getLatitude());
                 mLongitude=String.valueOf(mLastLocation.getLongitude());
+
                 getCurrentWeatherDataBasedOnLatAndLon(mLatitude, mLongitude);
             }
         }
     }
 
+    //Function to get current weather of location that user searched. The parameter "data" is location name that user types in search box.
     public void getCurrentWeatherData(String data) {
+        // use Volley(a HTTP library) by creating a RequestQueue
         RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
         String url = "http://api.openweathermap.org/data/2.5/weather?q="+data+"&units=metric&appid=f9c2ac0eda679b17d06683868e251e1d";
+
+        // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
@@ -187,9 +194,11 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
 
                     }
                 });
+        // Add the request to the RequestQueue.
         requestQueue.add(stringRequest);
     }
 
+    //Function to get current weather of last location of user's device
     public void getCurrentWeatherDataBasedOnLatAndLon(String lat, String lon) {
         RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
         String url = "http://api.openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+lon+"&units=metric&appid=f9c2ac0eda679b17d06683868e251e1d";
