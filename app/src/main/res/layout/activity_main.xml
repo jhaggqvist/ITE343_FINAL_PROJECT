@@ -25,6 +25,7 @@
             android:layout_height="wrap_content"
             android:hint="City"
             android:textColor="#2D2C31"
+            android:inputType="text"
             android:maxLines="1"/>
         <Button
             android:id="@+id/btn_search"
