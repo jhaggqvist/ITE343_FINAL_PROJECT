@@ -1,5 +1,6 @@
 package com.example.malthael.weatherprediction;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.icu.text.SimpleDateFormat;
 import android.location.Location;
@@ -27,8 +28,6 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -37,9 +36,9 @@ import org.json.JSONObject;
 
 import java.util.Date;
 
-public class MainActivity extends AppCompatActivity implements ConnectionCallbacks, OnConnectionFailedListener, OnMapReadyCallback {
+public class MainActivity extends AppCompatActivity implements ConnectionCallbacks, OnConnectionFailedListener{
     EditText edtCitySearch;
-    Button btnSearch;
+    Button btnSearch, btnNextDays;
     TextView tvCityName, tvCountryName, tvTemp, tvWeatherStatus, tvCloud, tvHumidity, tvWind, tvLastUpdate;
     ImageView imgWeatherIcon;
 
@@ -47,7 +46,6 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
     Location mLastLocation;
     String mLatitude;
     String mLongitude;
-    GoogleMap map;
     public static final int MY_PERMISSIONS_REQUEST = 1;
 
     @Override
@@ -78,17 +76,7 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
 
         }
 
-        edtCitySearch = (EditText) findViewById(R.id.edt_city_input);
-        btnSearch = (Button) findViewById(R.id.btn_search);
-        tvCityName = (TextView) findViewById(R.id.tv_city_name);
-        tvCountryName = (TextView) findViewById(R.id.tv_country_name);
-        tvTemp = (TextView) findViewById(R.id.tv_temp);
-        tvWeatherStatus = (TextView) findViewById(R.id.tv_weather_status);
-        tvCloud = (TextView) findViewById(R.id.tv_cloud);
-        tvHumidity = (TextView) findViewById(R.id.tv_humidity);
-        tvWind = (TextView) findViewById(R.id.tv_wind);
-        tvLastUpdate = (TextView) findViewById(R.id.tv_last_update);
-        imgWeatherIcon = (ImageView) findViewById(R.id.imgv_weather_icon);
+        getReferences();
 
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,6 +91,32 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
 
             }
         });
+
+        btnNextDays.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, CheckNextDays.class);
+                String currentCity = tvCityName.getText().toString().toLowerCase().trim();
+                String formattedText = currentCity.replace("city: ","");
+                intent.putExtra("cityName", formattedText);
+                startActivity(intent);
+            }
+        });
+    }
+
+    public void getReferences() {
+        edtCitySearch = (EditText) findViewById(R.id.edt_city_input);
+        btnSearch = (Button) findViewById(R.id.btn_search);
+        btnNextDays = (Button) findViewById(R.id.btn_nextdays);
+        tvCityName = (TextView) findViewById(R.id.tv_city_name);
+        tvCountryName = (TextView) findViewById(R.id.tv_country_name);
+        tvTemp = (TextView) findViewById(R.id.tv_temp);
+        tvWeatherStatus = (TextView) findViewById(R.id.tv_weather_status);
+        tvCloud = (TextView) findViewById(R.id.tv_cloud);
+        tvHumidity = (TextView) findViewById(R.id.tv_humidity);
+        tvWind = (TextView) findViewById(R.id.tv_wind);
+        tvLastUpdate = (TextView) findViewById(R.id.tv_last_update);
+        imgWeatherIcon = (ImageView) findViewById(R.id.imgv_weather_icon);
     }
 
     protected void onStart() {
@@ -292,8 +306,4 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
 
     }
 
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        this.map = googleMap;
-    }
 }

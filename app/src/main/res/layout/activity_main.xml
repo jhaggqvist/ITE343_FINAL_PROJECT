@@ -24,7 +24,8 @@
             android:layout_weight="7"
             android:layout_height="wrap_content"
             android:hint="City"
-            android:textColor="#2D2C31"/>
+            android:textColor="#2D2C31"
+            android:maxLines="1"/>
         <Button
             android:id="@+id/btn_search"
             android:layout_width="0dp"
@@ -151,10 +152,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
         android:text="Last update: "
         android:textSize="16sp"
         android:textColor="#2D2C31"
         android:gravity="center"/>
+
+    <Button
+        android:id="@+id/btn_nextdays"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Next Days"
+        android:textColor="#2D2C31"/>
 
 
 </LinearLayout>
