@@ -37,6 +37,7 @@ import org.json.JSONObject;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity implements ConnectionCallbacks, OnConnectionFailedListener{
+    //Matthew
     EditText edtCitySearch;
     Button btnSearch, btnNextDays;
     TextView tvCityName, tvCountryName, tvTemp, tvWeatherStatus, tvCloud, tvHumidity, tvWind, tvLastUpdate;
