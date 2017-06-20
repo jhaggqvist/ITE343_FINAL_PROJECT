@@ -129,7 +129,7 @@ public void onActivityResult(int requestCode, int resultCode, Intent data){
             String name = acct.getDisplayName();
 
             // pop a welcome toast and send them to weather app
-            Toast.makeText(RegAndLogin.this, "test" + name, Toast.LENGTH_SHORT).show();
+            Toast.makeText(RegAndLogin.this, "Welcome " + name, Toast.LENGTH_SHORT).show();
 
             Intent myIntent = new Intent(this, MainActivity.class);
             startActivity(myIntent);
@@ -150,6 +150,7 @@ public void onActivityResult(int requestCode, int resultCode, Intent data){
         }
 else {
             mAuth.createUserWithEmailAndPassword(email,password);
+            Toast.makeText(RegAndLogin.this, "Successfully created a new account, welcome " + email, Toast.LENGTH_SHORT).show();
         }
 
 
@@ -172,7 +173,7 @@ else {
                 public void onComplete(@NonNull Task<AuthResult> task) {                // if login is successfull
                     Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
                     if (task.isSuccessful()){
-                        Toast.makeText(RegAndLogin.this, "Welcome" + email, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegAndLogin.this, "Welcome " + email, Toast.LENGTH_SHORT).show();
                         loginSuccess(view); // new intent for MainActivity/start of app
                     }
 
