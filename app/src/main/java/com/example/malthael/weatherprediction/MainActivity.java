@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if (mGoogleApiClient == null) {
+        if (mGoogleApiClient == null) {  // if googleApiClient does not exist, create one
             mGoogleApiClient = new GoogleApiClient.Builder(this)
                     .addConnectionCallbacks(this)
                     .addOnConnectionFailedListener(this)
@@ -76,16 +76,16 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
 
         }
 
-        getReferences();
+        getReferences(); // sets all references for edittexts, button, textview, etc...
 
-        btnSearch.setOnClickListener(new View.OnClickListener() {
+        btnSearch.setOnClickListener(new View.OnClickListener() { //click the search button
             @Override
             public void onClick(View v) {
                 String city = edtCitySearch.getText().toString();
-                if(city.equals("")) {
+                if(city.equals("")) { // if there is nothing in there
                     Toast.makeText(MainActivity.this, "Please input a location.", Toast.LENGTH_SHORT).show();
 
-                }else {
+                }else { // if there is data inside
                     getCurrentWeatherData(city);
                 }
 
@@ -94,17 +94,17 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
 
         btnNextDays.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) { // onclick for checkNextDays
                 Intent intent = new Intent(MainActivity.this, CheckNextDays.class);
                 String currentCity = tvCityName.getText().toString().toLowerCase().trim();
                 String formattedText = currentCity.replace("city: ","");
                 intent.putExtra("cityName", formattedText);
-                startActivity(intent);
+                startActivity(intent); //start checkNextDays
             }
         });
     }
 
-    public void getReferences() {
+    public void getReferences() { //reference for all txt and buttons
         edtCitySearch = (EditText) findViewById(R.id.edt_city_input);
         btnSearch = (Button) findViewById(R.id.btn_search);
         btnNextDays = (Button) findViewById(R.id.btn_nextdays);
@@ -119,31 +119,31 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
         imgWeatherIcon = (ImageView) findViewById(R.id.imgv_weather_icon);
     }
 
-    protected void onStart() {
+    protected void onStart() { //start googleApiClient
         mGoogleApiClient.connect();
         super.onStart();
     }
 
-    protected void onStop() {
+    protected void onStop() { //stop googleApiClient
         mGoogleApiClient.disconnect();
         super.onStop();
     }
 
     //Functions to initialize value for Lat and Lon variables
     public void launchLocation() {
-        if (ContextCompat.checkSelfPermission(this,
+        if (ContextCompat.checkSelfPermission(this, // check for permission
                 android.Manifest.permission.ACCESS_COARSE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
-            mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-            if(mGoogleApiClient == null) {
+            mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient); // asks for last location
+            if(mGoogleApiClient == null) { // if googleapiclient doesnt exist 2
                 Toast.makeText(this, "null", Toast.LENGTH_SHORT).show();
             }
 
-            if (mLastLocation != null) {
+            if (mLastLocation != null) { // if there is no location, ask for it again
                 mLatitude=String.valueOf(mLastLocation.getLatitude());
                 mLongitude=String.valueOf(mLastLocation.getLongitude());
 
-                getCurrentWeatherDataBasedOnLatAndLon(mLatitude, mLongitude);
+                getCurrentWeatherDataBasedOnLatAndLon(mLatitude, mLongitude); // ask for current weather based on lon and lat
             }
         }
     }
@@ -155,30 +155,30 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
         String url = "http://api.openweathermap.org/data/2.5/weather?q="+data+"&units=metric&appid=f9c2ac0eda679b17d06683868e251e1d";
 
         // Request a string response from the provided URL.
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, // request the string url + "data" which is city name
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            String cityName = jsonObject.getString("name");
+                            String cityName = jsonObject.getString("name");//gets the name of the city
                             tvCityName.setText("City: " + cityName);
 
-                            String dateUpdate = jsonObject.getString("dt");
+                            String dateUpdate = jsonObject.getString("dt"); // sets the last updated time, + converts it to readable time with simpledataformat
                             long l = Long.valueOf(dateUpdate);
                             Date date = new Date(l*1000L);
                             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEEE yyyy-MM-dd HH-mm-ss");
                             String dateUpdateFormatted = simpleDateFormat.format(date);
                             tvLastUpdate.setText("Last update: " + dateUpdateFormatted);
 
-                            JSONArray jsonArrayWeather = jsonObject.getJSONArray("weather");
+                            JSONArray jsonArrayWeather = jsonObject.getJSONArray("weather"); // sets the icon based on weather
                             JSONObject jsonObjectWeather = jsonArrayWeather.getJSONObject(0);
                             String weatherStatus = jsonObjectWeather.getString("main");
                             tvWeatherStatus.setText(weatherStatus);
                             String icon = jsonObjectWeather.getString("icon");
                             Picasso.with(MainActivity.this).load("http://openweathermap.org/img/w/"+icon+".png").into(imgWeatherIcon);
 
-                            JSONObject jsonObjectMain = jsonObject.getJSONObject("main");
+                            JSONObject jsonObjectMain = jsonObject.getJSONObject("main"); // gets the temperature and humidity of data
                             String temp = jsonObjectMain.getString("temp");
                             String humidity = jsonObjectMain.getString("humidity");
                             Double d = Double.valueOf(temp);
@@ -186,15 +186,15 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
                             tvTemp.setText(tempFormatted+"°C");
                             tvHumidity.setText(humidity+"%");
 
-                            JSONObject jsonObjectWind = jsonObject.getJSONObject("wind");
+                            JSONObject jsonObjectWind = jsonObject.getJSONObject("wind"); // gets the wind speed
                             String wind = jsonObjectWind.getString("speed");
                             tvWind.setText(wind+"m/s");
 
-                            JSONObject jsonObjectCloud = jsonObject.getJSONObject("clouds");
+                            JSONObject jsonObjectCloud = jsonObject.getJSONObject("clouds"); // sets cloud percentage
                             String cloud = jsonObjectCloud.getString("all");
                             tvCloud.setText(cloud+"%");
 
-                            JSONObject jsonObjectSys = jsonObject.getJSONObject("sys");
+                            JSONObject jsonObjectSys = jsonObject.getJSONObject("sys"); // sets the country
                             String country = jsonObjectSys.getString("country");
                             tvCountryName.setText("Country: " + country);
                         } catch (JSONException e) {
@@ -209,19 +209,19 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
                     }
                 });
         // Add the request to the RequestQueue.
-        requestQueue.add(stringRequest);
+        requestQueue.add(stringRequest); //sends the request for all of the above in order to populate the json
     }
 
     //Function to get current weather of last location of user's device
     public void getCurrentWeatherDataBasedOnLatAndLon(String lat, String lon) {
-        RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);// asks for lon and lat from openweather
         String url = "http://api.openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+lon+"&units=metric&appid=f9c2ac0eda679b17d06683868e251e1d";
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            JSONObject jsonObject = new JSONObject(response);
+                            JSONObject jsonObject = new JSONObject(response); // SAME AS PREVIOUS EXEPT IT IS BASED ON LON AND LAT
                             String cityName = jsonObject.getString("name");
                             tvCityName.setText("City: " + cityName);
 
@@ -269,7 +269,7 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
 
                     }
                 });
-        requestQueue.add(stringRequest);
+        requestQueue.add(stringRequest); // SAME AS PREVIOUS, POPULATE JSON
     }
 
     @Override
