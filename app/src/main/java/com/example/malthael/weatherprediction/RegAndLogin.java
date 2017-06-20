@@ -88,7 +88,7 @@ public class RegAndLogin extends AppCompatActivity implements GoogleApiClient.On
             }
         };
         getEmail = (EditText)findViewById(R.id.editTextUsername);
-        getPassword = (EditText)findViewById(R.id.editTextUsername);
+        getPassword = (EditText)findViewById(R.id.editTextPassword);
 
     }// end of onCreate
 
@@ -144,11 +144,18 @@ public void onActivityResult(int requestCode, int resultCode, Intent data){
     public void createAccount(View view){                       // creates a new account
         String email = getEmail.getText().toString();
         String password = getPassword.getText().toString();
+        int passLenght = password.length();
 
-        if (email.equals("") || password.equals("")){
+        if (email.equals("") || password.equals("")){ // checks if email and password is entered
             Toast.makeText(RegAndLogin.this, "Please enter Email and Password.", Toast.LENGTH_SHORT).show();
         }
-else {
+        if (!email.contains("@")){                  // checks to see if it is really an email by looking for @
+            Toast.makeText(RegAndLogin.this, "Please enter a valid Email", Toast.LENGTH_SHORT).show();
+        }
+        if (passLenght <= 4){ // makes sure that the password is longer then 4 characthers.
+            Toast.makeText(RegAndLogin.this, "Please enter a more difficult password", Toast.LENGTH_SHORT).show();
+        }
+else {                                                              // if all criteria is met, create a new account
             mAuth.createUserWithEmailAndPassword(email,password);
             Toast.makeText(RegAndLogin.this, "Successfully created a new account, welcome " + email, Toast.LENGTH_SHORT).show();
         }
