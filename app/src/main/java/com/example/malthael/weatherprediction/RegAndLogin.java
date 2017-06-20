@@ -150,14 +150,35 @@ public void onActivityResult(int requestCode, int resultCode, Intent data){
             Toast.makeText(RegAndLogin.this, "Please enter Email and Password.", Toast.LENGTH_SHORT).show();
         }
         if (!email.contains("@")){                  // checks to see if it is really an email by looking for @
-            Toast.makeText(RegAndLogin.this, "Please enter a valid Email", Toast.LENGTH_SHORT).show();
+          Toast.makeText(RegAndLogin.this, "Please enter a valid Email", Toast.LENGTH_SHORT).show();
         }
         if (passLenght <= 4){ // makes sure that the password is longer then 4 characthers.
-            Toast.makeText(RegAndLogin.this, "Please enter a more difficult password", Toast.LENGTH_SHORT).show();
+         Toast.makeText(RegAndLogin.this, "Please enter a more difficult password", Toast.LENGTH_SHORT).show();
         }
 else {                                                              // if all criteria is met, create a new account
-            mAuth.createUserWithEmailAndPassword(email,password);
-            Toast.makeText(RegAndLogin.this, "Successfully created a new account, welcome " + email, Toast.LENGTH_SHORT).show();
+            mAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(RegAndLogin.this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        // Sign in success, update UI with the signed-in user's information
+                        Log.d(TAG, "createUserWithEmail:success");
+                        Toast.makeText(RegAndLogin.this, "Account creating successfull", Toast.LENGTH_SHORT).show();
+                        FirebaseUser user = mAuth.getCurrentUser();
+
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                        Toast.makeText(RegAndLogin.this, "Authentication failed.",
+                                Toast.LENGTH_SHORT).show();
+
+                    }
+
+                    // ...
+                }
+            });
+
+
         }
 
 
